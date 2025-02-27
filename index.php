@@ -18,16 +18,16 @@ include 'header.php';
                         <img src="img/logo.png" alt="Flight Template">
                     </div>
                     <div class="tabs-content">
-                        <h4>Why Fly With Us?</h4>
+                        <h4>Tại Sao Nên Bay Cùng Chúng Tôi?</h4>
                         <ul class="social-links">
-                            <li><a href=""><em>Best Price Guarantee</em></a></li>
-                            <li><a href="#"><em>150+ Worldwide Destinations</em></a></li>
-                            <li><a href="#"><em>Premium Customer Service</em></a></li>
-                            <li><a href="#"><em>Safe & Flexible Booking</em></a></li>
+                            <li><a href=""><em>Cam kết giá tốt nhất</em></a></li>
+                            <li><a href="#"><em>Hơn 150 điểm đến trên toàn thế giới</em></a></li>
+                            <li><a href="#"><em>Dịch vụ khách hàng cao cấp</em></a></li>
+                            <li><a href="#"><em>Đặt chỗ an toàn & linh hoạt</em></a></li>
                         </ul>
                     </div>
                     <div class="page-direction-button">
-                        <a href="contact.php"><i class="fa fa-phone"></i>Contact Us Now</a>
+                        <a href="contact.php"><i class="fa fa-phone"></i>Liên hệ ngay</a>
                     </div>
                 </div>
             </div>
@@ -35,12 +35,12 @@ include 'header.php';
                 <section id="first-tab-group" class="tabgroup">
                     <div id="tab1">
                         <div class="submit-form">
-                            <h4>Check availability for <em>direction</em>:</h4>
+                            <h4>Kiểm tra chỗ trống cho <em>hướng</em>:</h4>
                             <form onsubmit="validateForm(event)" action="flightsearch.php" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="from">From:</label>
+                                            <label for="from">Từ:</label>
                                             <select name="from" id="from" required>
                                                 <?php
                                                 foreach ($LocaltionDi as $value) {
@@ -52,7 +52,7 @@ include 'header.php';
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="to">To:</label>
+                                            <label for="to">Đến:</label>
                                             <select name="to" id="to" required>
                                                 <?php
                                                 foreach ($LocaltionDen as $value) {
@@ -64,13 +64,13 @@ include 'header.php';
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="departure">Departure date:</label>
+                                            <label for="departure">Ngày khởi hành:</label>
                                             <input name="departure" id="departure" type="date" class="form-control" required>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="return">Return date:</label>
+                                            <label for="return">Ngày trở về:</label>
                                             <input name="return" id="return" type="date" class="form-control">
                                         </fieldset>
                                     </div>
@@ -78,11 +78,11 @@ include 'header.php';
                                         <div class="radio-select">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                                    <label for="round">Round</label>
+                                                    <label for="round">Khứ hồi</label>
                                                     <input type="radio" name="trip" id="round" value="round" required>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                                    <label for="oneway">Oneway</label>
+                                                    <label for="oneway">Một chiều</label>
                                                     <input type="radio" name="trip" id="oneway" value="one-way" required>
                                                 </div>
                                             </div>
@@ -90,14 +90,14 @@ include 'header.php';
                                     </div>          
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="passengers">Number of passengers:</label>
+                                            <label for="passengers">Số lượng hành khách:</label>
                                             <input name="passengers" type="number" class="form-control" min="1" max="10"
                                                 required>
                                         </fieldset>
                                     </div>    
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <button type="submit" class="btn">Flight search</button>
+                                            <button type="submit" class="btn">Tìm chuyến bay</button>
                                         </fieldset>
                                     </div>
                                 </div>
