@@ -1,5 +1,13 @@
-<?php 
+<?php
 include 'header.php';
+
+// if ($flights) {
+//     foreach ($flights as $flight) {
+//         echo "Chuyến bay ID: " . $flight['IDChuyenBay'] . " - Giờ khởi hành: " . $flight['GioKhoiHanh'] . " - Giờ đến: " . $flight['GioDen'] . "<br>";
+//     }
+// } else {
+//     echo "Không có chuyến bay phù hợp.";
+// }
 ?>
 <section class="banner" id="top">
     <div class="container">
@@ -28,65 +36,42 @@ include 'header.php';
                     <div id="tab1">
                         <div class="submit-form">
                             <h4>Check availability for <em>direction</em>:</h4>
-                            <form id="form-submit" action="search.php" method="post">
+                            <form onsubmit="validateForm(event)" action="flightsearch.php" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="from">From:</label>
-                                            <select name='from' required>
-                                                <option value="">Select a location...</option>
-                                                <option value="Ho Chi Minh City">Ho Chi Minh City</option>
-                                                <option value="Hanoi">Hanoi</option>
-                                                <option value="Da Nang">Da Nang</option>
-                                                <option value="Nha Trang">Nha Trang</option>
-                                                <option value="Phu Quoc">Phu Quoc</option>
-                                                <option value="Can Tho">Can Tho</option>
-                                                <option value="Hue">Hue</option>
-                                                <option value="Vinh">Vinh</option>
-                                                <option value="Thanh Hoa">Thanh Hoa</option>
-                                                <option value="Quang Ninh">Quang Ninh</option>
-                                                <option value="Buon Ma Thuot">Buon Ma Thuot</option>
-                                                <option value="Da Lat">Da Lat</option>
-                                                <option value="Con Dao">Con Dao</option>
-                                                <option value="Tuy Hoa">Tuy Hoa</option>
-                                                <option value="Quy Nhon">Quy Nhon</option>
-                                                <option value="Rach Gia">Rach Gia</option>
+                                            <select name="from" id="from" required>
+                                                <?php
+                                                foreach ($LocaltionDi as $value) {
+                                                    echo "<option value='{$value['DDi']}'>{$value['DDi']}</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="to">To:</label>
-                                            <select name='to' required>
-                                                <option value="Ho Chi Minh City">Ho Chi Minh City</option>
-                                                <option value="Hanoi">Hanoi</option>
-                                                <option value="Da Nang">Da Nang</option>
-                                                <option value="Nha Trang">Nha Trang</option>
-                                                <option value="Phu Quoc">Phu Quoc</option>
-                                                <option value="Can Tho">Can Tho</option>
-                                                <option value="Hue">Hue</option>
-                                                <option value="Vinh">Vinh</option>
-                                                <option value="Thanh Hoa">Thanh Hoa</option>
-                                                <option value="Quang Ninh">Quang Ninh</option>
-                                                <option value="Buon Ma Thuot">Buon Ma Thuot</option>
-                                                <option value="Da Lat">Da Lat</option>
-                                                <option value="Con Dao">Con Dao</option>
-                                                <option value="Tuy Hoa">Tuy Hoa</option>
-                                                <option value="Quy Nhon">Quy Nhon</option>
-                                                <option value="Rach Gia">Rach Gia</option>
+                                            <select name="to" id="to" required>
+                                                <?php
+                                                foreach ($LocaltionDen as $value) {
+                                                    echo "<option value='{$value['DDen']}'>{$value['DDen']}</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="departure">Departure date:</label>
-                                            <input name="departure" type="date" class="form-control" required>
+                                            <input name="departure" id="departure" type="date" class="form-control" required>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="return">Return date:</label>
-                                            <input name="return" type="date" class="form-control" required>
+                                            <input name="return" id="return" type="date" class="form-control">
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
@@ -94,26 +79,25 @@ include 'header.php';
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                                     <label for="round">Round</label>
-                                                    <input type="radio" name="trip" id="round" value="round"
-                                                        required="required" onchange='this.form.()'>
+                                                    <input type="radio" name="trip" id="round" value="round" required>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                                     <label for="oneway">Oneway</label>
-                                                    <input type="radio" name="trip" id="oneway" value="one-way"
-                                                        required="required" onchange='this.form.()'>
+                                                    <input type="radio" name="trip" id="oneway" value="one-way" required>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><div class="col-md-6">
+                                    </div>          
+                                    <div class="col-md-6">
                                         <fieldset>
                                             <label for="passengers">Number of passengers:</label>
                                             <input name="passengers" type="number" class="form-control" min="1" max="10"
                                                 required>
                                         </fieldset>
-                                    </div>
+                                    </div>    
                                     <div class="col-md-6">
                                         <fieldset>
-                                        <button type="button" class="btn" onclick="window.location.href='flightsearch.php';">Flight search</button>
+                                            <button type="submit" class="btn">Flight search</button>
                                         </fieldset>
                                     </div>
                                 </div>
@@ -125,6 +109,6 @@ include 'header.php';
         </div>
     </div>
 </section>
-<?php 
+<?php
 include 'footer.php';
 ?>

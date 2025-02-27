@@ -1,3 +1,28 @@
+<?php
+var_dump($_POST);
+require 'config/database.php';
+
+$departure = $_POST['departure'];
+$return = $_POST['return'];
+$passengers = $_POST['passengers'];
+//     foreach($Costf as $value){
+//         if($value['NgayBay']==$departure||$value['NgayBay']==$return){
+//         // var_dump($value);
+//         echo $value['GioKhoiHanh'];
+//         echo $value['GioDen'];
+//         echo $value['ThoiGianDuKien'];
+//         echo $value['DDi'];
+//         echo $value['DDen'];
+//         echo $value['IDHang'];
+//         echo $value['NgayBay'];
+//         echo $value['GiaTien']. "<br>";
+
+//     }
+// }
+
+?>
+
+
 <html lang="en">
 
 <head>
@@ -14,6 +39,7 @@
         window.location.href = "passengerif.php";
     }
 </script>
+
 <body>
     <div class="flight-container">
         <div class="flight-header">
@@ -33,149 +59,47 @@
                 <button class="day-button">Thứ 4<br />05/03</button>
             </div>
             <div class="p-4">
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN7214</div>
-                        <div class="text-sm text-gray-500">22:15 SGN <i class="fas fa-arrow-right mx-2"></i> 00:20 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.020.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN7212</div>
-                        <div class="text-sm text-gray-500">23:10 SGN <i class="fas fa-arrow-right mx-2"></i> 01:15 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.020.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
+                <form method="post" action="passengerif.php">
+                    <table>
+                        <?php
+                        foreach ($Costf as $value) {
+                            if ($value['NgayBay'] == $departure || $value['NgayBay'] == $return) {
+                        ?>
+                                <div class="flight-info">
+                                    <img alt="Vietjet Air logo"
+                                        src="https://storage.googleapis.com/a1aa/image/Oq1tCQqOOQr42yWO3DYuRyfepECFjP0k4EmmrpDGrPI.jpg" />
+                                    <div class="details">
+                                        <div class="font-bold">Vietjet Air - VJ184</div>
+                                        <div class="text-sm text-gray-500"><?= $value['GioKhoiHanh'] ?> <?= $value['DDi'] ?><i class="fas fa-arrow-right mx-2"></i> <?= $value['GioDen'] ?> <?= $value['DDen'] ?>
+                                        </div>
+                                        <div class="text-sm text-gray-500"><?= $value['ThoiGianDuKien'] ?> Bay thẳng</div>
+                                        <input type="hidden" name="chuyenbay[GioKhoiHanh]" value="<?= $value['GioKhoiHanh'] ?>">
+                                        <input type="hidden" name="chuyenbay[GioDen]" value="<?= $value['GioDen'] ?>">
+                                        <input type="hidden" name="chuyenbay[ThoiGianDuKien]" value="<?= $value['ThoiGianDuKien'] ?>">
+                                        <input type="hidden" name="chuyenbay[DDi]" value="<?= $value['DDi'] ?>">
+                                        <input type="hidden" name="chuyenbay[DDen]" value="<?= $value['DDen'] ?>">
+                                        <input type="hidden" name="chuyenbay[IDHang]" value="<?= $value['IDHang'] ?>">
+                                        <input type="hidden" name="chuyenbay[NgayBay]" value="<?= $value['NgayBay'] ?>">
+                                        <input type="hidden" name="chuyenbay[GiaTien]" value="<?= $value['GiaTien'] ?>">
+                                        <input type="hidden" name="TongTien" value="<?= $value['GiaTien'] * $passengers ?>">
+                                        <input type="hidden" name="passengers" value="<?= $passengers ?>">
+                                    </div>
+                                    <div class="price">
+                                        <div class="text-lg font-bold text-blue-600"><?= number_format($value['GiaTien'] * $passengers) ?> VND</div>
+                                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
+                                        <button onclick="redirectToPassenger()">CHỌN</button>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </table>
+                </form>
 
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN7208</div>
-                        <div class="text-sm text-gray-500">05:30 SGN <i class="fas fa-arrow-right mx-2"></i> 07:35 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.050.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN7210</div>
-                        <div class="text-sm text-gray-500">05:30 SGN <i class="fas fa-arrow-right mx-2"></i> 07:35 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.050.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN206</div>
-                        <div class="text-sm text-gray-500">06:00 SGN <i class="fas fa-arrow-right mx-2"></i> 08:05 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.381.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN252</div>
-                        <div class="text-sm text-gray-500">16:40 SGN <i class="fas fa-arrow-right mx-2"></i> 18:45 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.848.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN260</div>
-                        <div class="text-sm text-gray-500">21:00 SGN <i class="fas fa-arrow-right mx-2"></i> 23:05 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.848.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-
-                <div class="flight-info">
-                    <img alt="Vietnam Airlines logo"
-                        src="https://storage.googleapis.com/a1aa/image/qge95MvO5Ry41s9syle6fkIbelOD6pIAQm_LX8kHKRw.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietnam Airlines - VN224</div>
-                        <div class="text-sm text-gray-500">22:00 SGN <i class="fas fa-arrow-right mx-2"></i> 00:05 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 5m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.848.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
-                <div class="flight-info">
-                    <img alt="Vietjet Air logo"
-                        src="https://storage.googleapis.com/a1aa/image/Oq1tCQqOOQr42yWO3DYuRyfepECFjP0k4EmmrpDGrPI.jpg" />
-                    <div class="details">
-                        <div class="font-bold">Vietjet Air - VJ184</div>
-                        <div class="text-sm text-gray-500">12:40 SGN <i class="fas fa-arrow-right mx-2"></i> 14:50 HAN
-                        </div>
-                        <div class="text-sm text-gray-500">2h 10m Bay thẳng</div>
-                    </div>
-                    <div class="price">
-                        <div class="text-lg font-bold text-blue-600">2.852.000</div>
-                        <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                        <button onclick="redirectToPassenger()">CHỌN</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
