@@ -8,5 +8,32 @@ try{
 }catch(Exception $e){
 	echo $e->getMessage();
 }
+$diemDi = $_POST['diemDi'] ?? '';
+$diemDen = $_POST['diemDen'] ?? '';
+$ngayDi = $_POST['ngayDi'] ?? '';
+$ngayVe = $_POST['ngayVe'] ?? '';
+
+$sql = "SELECT * FROM chuyenbay WHERE DDi = :diemDi AND DDen = :diemDen";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':diemDi', $diemDi, PDO::PARAM_STR);
+$stmt->bindParam(':diemDen', $diemDen, PDO::PARAM_STR);
+$stmt->execute();
+$flights = $stmt->fetchAll();
+
+$sql = "SELECT DDi FROM `chuyenbay`  GROUP BY DDi";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$LocaltionDi = $stmt->fetchAll();
+
+$sql = "SELECT DDen FROM `chuyenbay`  GROUP BY DDen";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$LocaltionDen = $stmt->fetchAll();
+
+$sql = "SELECT * FROM chuyenbay ";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$Costf = $stmt->fetchAll();
+// var_dump($Costf);
 
 ?>

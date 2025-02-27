@@ -1,26 +1,6 @@
 <?php
 include 'header.php';
-var_dump($_POST);
-$diemDi = $_POST['diemDi'] ?? '';
-$diemDen = $_POST['diemDen'] ?? '';
-$ngayDi = $_POST['ngayDi'] ?? '';
-$ngayVe = $_POST['ngayVe'] ?? '';
 
-$sql = "SELECT * FROM chuyenbay WHERE DDi = :diemDi AND DDen = :diemDen";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':diemDi', $diemDi, PDO::PARAM_STR);
-$stmt->bindParam(':diemDen', $diemDen, PDO::PARAM_STR);
-$stmt->execute();
-$flights = $stmt->fetchAll();
-
-$sql = "SELECT DDi FROM `chuyenbay`  GROUP BY DDi";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$LocaltionDi = $stmt->fetchAll();
-$sql = "SELECT DDen FROM `chuyenbay`  GROUP BY DDen";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$LocaltionDen = $stmt->fetchAll();
 // if ($flights) {
 //     foreach ($flights as $flight) {
 //         echo "Chuyến bay ID: " . $flight['IDChuyenBay'] . " - Giờ khởi hành: " . $flight['GioKhoiHanh'] . " - Giờ đến: " . $flight['GioDen'] . "<br>";
@@ -28,7 +8,6 @@ $LocaltionDen = $stmt->fetchAll();
 // } else {
 //     echo "Không có chuyến bay phù hợp.";
 // }
-
 ?>
 <section class="banner" id="top">
     <div class="container">
@@ -57,7 +36,7 @@ $LocaltionDen = $stmt->fetchAll();
                     <div id="tab1">
                         <div class="submit-form">
                             <h4>Check availability for <em>direction</em>:</h4>
-                            <form onsubmit="validateForm(event)" method="post">
+                            <form onsubmit="validateForm(event)" action="Test.php" method="post">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <fieldset>
@@ -108,7 +87,14 @@ $LocaltionDen = $stmt->fetchAll();
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>              
+                                    </div>          
+                                    <div class="col-md-6">
+                                        <fieldset>
+                                            <label for="passengers">Number of passengers:</label>
+                                            <input name="passengers" type="number" class="form-control" min="1" max="10"
+                                                required>
+                                        </fieldset>
+                                    </div>    
                                     <div class="col-md-6">
                                         <fieldset>
                                             <button type="submit" class="btn">Flight search</button>
