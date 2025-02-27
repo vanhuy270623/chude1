@@ -129,5 +129,56 @@ jQuery(document).ready(function($) {
             transitionSpeed: 400
         });
 
-        
+});
+function validateForm(event) {
+  var from = document.getElementById("from").value;
+  var to = document.getElementById("to").value;
+  var departure = document.getElementById("departure").value;
+  var returnDate = document.getElementById("return").value;
+
+  // Kiểm tra điểm đi và điểm đến trùng nhau
+  if (from === to) {
+      Swal.fire({
+          icon: "error",
+          title: "Lỗi!",
+          text: "Điểm đi và điểm đến không được trùng nhau!",
+          confirmButtonText: "OK",
+          timer: 3000
+      });
+      event.preventDefault(); // Ngăn form gửi đi
+      return false;
+  }
+
+  // Kiểm tra ngày về phải sau ngày đi
+  if (returnDate && departure && returnDate <= departure) {
+      Swal.fire({
+          icon: "warning",
+          title: "Ngày không hợp lệ!",
+          text: "Ngày về phải sau ngày đi!",
+          confirmButtonText: "OK",
+          timer: 3000
+      });
+      event.preventDefault(); // Ngăn form gửi đi
+      return false;
+  }
+}
+document.addEventListener("DOMContentLoaded", function () {
+  let today = new Date().toISOString().split("T")[0]; // Lấy ngày hôm nay dưới dạng YYYY-MM-DD
+
+  // Gán thuộc tính `min` cho input ngày đi & ngày về
+  document.getElementById("departure").min = today;
+  document.getElementById("return").min = today;
+
+  // Ngăn người dùng nhập ngày cũ bằng bàn phím
+  document.getElementById("departure").addEventListener("input", function () {
+      if (this.value < today) {
+          this.value = today;
+      }
+  });
+
+  document.getElementById("return").addEventListener("input", function () {
+      if (this.value < today) {
+          this.value = today;
+      }
+  });
 });

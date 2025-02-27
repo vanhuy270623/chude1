@@ -29,6 +29,7 @@ if (isset($_SESSION['user-id'])) {
     <link rel="Shortcut Icon" href="img/logo-i.png" type="img/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">

@@ -34,5 +34,7 @@
 </footer>
 
 <link rel="stylesheet" href="css/footer.css">
+<script src="js/main.js"></script>
+
 </body>
 </html>

@@ -1,12 +1,12 @@
 <?php
 require 'constants.php';
-
-try {
-    $connection = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $connection->exec("set names utf8");
-} catch (PDOException $e) {
-    // Hiển thị lỗi và dừng chương trình
-    die("Connection failed! " );
+try{
+	$pdo=new PDO("mysql:host=localhost;dbname=flightmanagement","root","");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+	$pdo->query("set names 'UTF8'");
+}catch(Exception $e){
+	echo $e->getMessage();
 }
+
 ?>
