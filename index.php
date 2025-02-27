@@ -108,7 +108,7 @@ $LocaltionDen = $stmt->fetchAll();
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>              
                                     <div class="col-md-6">
                                         <fieldset>
                                             <button type="submit" class="btn">Flight search</button>
