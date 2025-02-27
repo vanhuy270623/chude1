@@ -104,6 +104,12 @@ include 'header.php';
                                                 </div>
                                             </div>
                                         </div>
+                                    </div><div class="col-md-6">
+                                        <fieldset>
+                                            <label for="passengers">Number of passengers:</label>
+                                            <input name="passengers" type="number" class="form-control" min="1" max="10"
+                                                required>
+                                        </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
