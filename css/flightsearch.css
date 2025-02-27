@@ -1,0 +1,140 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#results {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Additional styles for the flight booking layout */
+.flight-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.flight-header {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.flight-details {
+    background: white;
+    padding: 20px;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.flight-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.flight-info:last-child {
+    border-bottom: none;
+}
+
+.flight-info img {
+    width: 50px;
+    height: 50px;
+}
+
+.flight-info .details {
+    margin-left: 20px;
+}
+
+.flight-info .price {
+    text-align: right;
+}
+
+.flight-info .price button {
+    background: #ffc107;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.flight-info .price button:hover {
+    background: #e0a800;
+}
+.day-button {
+    background:rgb(255, 255, 255);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-align: center;
+    color: #333;
+}
+
+.day-button:hover {
+    background-color:rgb(248, 225, 13);
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day-button:active {
+    background-color:rgb(234, 238, 16);
+    transform: translateY(0);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-button:focus {
+    outline: none;
+    border-color:rgb(246, 250, 7);
+    box-shadow: 0 0 0 2px rgba(249, 253, 13, 0.25);
+}
+
+.day-button.selected {
+    background-color:rgb(214, 235, 28);
+    color: white;
+    border-color:rgb(233, 218, 18);
+}
