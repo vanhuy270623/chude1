@@ -30,7 +30,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $LocaltionDen = $stmt->fetchAll();
 
-$sql = "SELECT * FROM chuyenbay ";
+$sql = "SELECT * FROM `hangbay` JOIN chuyenbay on chuyenbay.IDHang=hangbay.IDHang ";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $Costf = $stmt->fetchAll();

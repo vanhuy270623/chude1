@@ -16,6 +16,7 @@ if (isset($_SESSION['user-id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,13 +30,19 @@ if (isset($_SESSION['user-id'])) {
     <link rel="Shortcut Icon" href="img/logo-i.png" type="img/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/main.js"></script>
+
+
+
 </head>
+
 <body>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
-                        data-target="#main-nav" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#main-nav" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                 </button>
                 <a class="navbar-brand" href="index.php">
@@ -47,7 +54,7 @@ if (isset($_SESSION['user-id'])) {
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">About us</a></li>
                     <li><a href="#">Contact</a></li>
-                    
+
                     <?php if (isset($_SESSION['user-id'])) : ?>
                         <li class="nav__profile">
                             <ul>
@@ -56,11 +63,18 @@ if (isset($_SESSION['user-id'])) {
                             </ul>
                         </li>
                     <?php else : ?>
-                        <li><a href="signin.php">Sign In</a></li>
+                        <li>
+                            <?php if (empty($_SESSION['login'])) : ?>
+                                <a href="signin.php">Sign In</a>
+                            <?php else : ?>
+                                <a href="logout.php">Log out</a>
+                            <?php endif; ?>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </div>
         </div>
     </nav>
 </body>
+
 </html>

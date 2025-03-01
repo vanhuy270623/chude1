@@ -5,6 +5,8 @@ require 'config/database.php';
 $departure = $_POST['departure'];
 $return = $_POST['return'];
 $passengers = $_POST['passengers'];
+$from=$_POST['from'];
+$to=$_POST['to'];
 //     foreach($Costf as $value){
 //         if($value['NgayBay']==$departure||$value['NgayBay']==$return){
 //         // var_dump($value);
@@ -64,12 +66,13 @@ $passengers = $_POST['passengers'];
                         <?php
                         foreach ($Costf as $value) {
                             if ($value['NgayBay'] == $departure || $value['NgayBay'] == $return) {
+                                if($value['DDi']==$from&& $value['DDen']==$to||$value['DDi']==$to&& $value['DDen']==$from){
                         ?>
                                 <div class="flight-info">
                                     <img alt="Vietjet Air logo"
                                         src="https://storage.googleapis.com/a1aa/image/Oq1tCQqOOQr42yWO3DYuRyfepECFjP0k4EmmrpDGrPI.jpg" />
                                     <div class="details">
-                                        <div class="font-bold">Vietjet Air - VJ184</div>
+                                        <div class="font-bold"><?= $value['TenHang'] ?> - <?= $value['MaMayBay'] ?></div>
                                         <div class="text-sm text-gray-500"><?= $value['GioKhoiHanh'] ?> <?= $value['DDi'] ?><i class="fas fa-arrow-right mx-2"></i> <?= $value['GioDen'] ?> <?= $value['DDen'] ?>
                                         </div>
                                         <div class="text-sm text-gray-500"><?= $value['ThoiGianDuKien'] ?> Bay thẳng</div>
@@ -91,6 +94,7 @@ $passengers = $_POST['passengers'];
                                     </div>
                                 </div>
                         <?php
+                                }
                             }
                         }
                         ?>

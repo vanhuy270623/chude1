@@ -1,13 +1,6 @@
 <?php
 include 'header.php';
 
-// if ($flights) {
-//     foreach ($flights as $flight) {
-//         echo "Chuyến bay ID: " . $flight['IDChuyenBay'] . " - Giờ khởi hành: " . $flight['GioKhoiHanh'] . " - Giờ đến: " . $flight['GioDen'] . "<br>";
-//     }
-// } else {
-//     echo "Không có chuyến bay phù hợp.";
-// }
 ?>
 <section class="banner" id="top">
     <div class="container">

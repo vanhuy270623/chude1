@@ -203,3 +203,36 @@ document.addEventListener("DOMContentLoaded", function () {
       }
   });
 });
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("signupForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Ngăn chặn form gửi dữ liệu ngay lập tức
+
+        let username = document.querySelector("input[name='username']").value.trim();
+
+        if (username === "") {
+            Swal.fire("Lỗi!", "Tên đăng nhập không được để trống!", "error");
+            return;
+        }
+
+        // Gửi AJAX kiểm tra username
+        fetch("check_username.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "username=" + encodeURIComponent(username)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Tên đăng nhập đã tồn tại!",
+                    text: "Vui lòng chọn tên khác!",
+                    confirmButtonText: "OK"
+                });
+            } else {
+                document.getElementById("signupForm").submit(); // Nếu không trùng, tiếp tục gửi form
+            }
+        })
+        .catch(error => console.error("Lỗi:", error));
+    });
+});
