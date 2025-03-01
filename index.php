@@ -68,20 +68,6 @@ include 'header.php';
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="radio-select">
-                                            <div class="row">
-                                                <div class="col-md-6 col-sm-6 col-xs-6">
-                                                    <label for="round">Khứ hồi</label>
-                                                    <input type="radio" name="trip" id="round" value="round" required>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-6">
-                                                    <label for="oneway">Một chiều</label>
-                                                    <input type="radio" name="trip" id="oneway" value="one-way" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>          
-                                    <div class="col-md-6">
                                         <fieldset>
                                             <label for="passengers">Số lượng hành khách:</label>
                                             <input name="passengers" type="number" class="form-control" min="1" max="10"

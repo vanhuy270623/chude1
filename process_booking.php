@@ -1,3 +1,7 @@
+<?php
+require "config/database.php";
+var_dump($_POST);
+?>
 <!DOCTYPE html>
 <html lang="vi">
 

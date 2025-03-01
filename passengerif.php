@@ -68,26 +68,7 @@ var_dump($chuyenbay['GioKhoiHanh']);
                                             </div>
                                         </div>
                                     <?php } ?>
-                                </div>
-
-
-                                <!-- Thông tin xuất hóa đơn -->
-                                <div id="invoice-info" class="hidden">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div>
-                                            <label class="block text-sm font-medium">Tên công ty</label>
-                                            <input type="text" name="invoice[company_name]" class="w-full border rounded p-2">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium">Mã số thuế</label>
-                                            <input type="text" name="invoice[tax_code]" class="w-full border rounded p-2">
-                                        </div>
-                                        <div class="md:col-span-2">
-                                            <label class="block text-sm font-medium">Địa chỉ</label>
-                                            <input type="text" name="invoice[address]" class="w-full border rounded p-2">
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>  
                             </div>
 
 
@@ -134,50 +115,7 @@ var_dump($chuyenbay['GioKhoiHanh']);
                 </form>
 
 
-                <!-- Invoice Information -->
-                <div class="mb-6 cursor-pointer" onclick="toggleInvoiceInfo()">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-file-invoice mr-2"></i>
-                        <h2 class="text-lg font-semibold">Thông tin xuất hóa đơn</h2>
-                        <!-- Thêm biểu tượng mũi tên -->
-                        <i id="arrow-icon" class="fas fa-chevron-down ml-2 transition-transform duration-200"></i>
-                    </div>
-                </div>
 
-                <div id="invoice-info" class="hidden">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-file-alt text-xl mr-2"></i>
-                        <h2 class="text-lg font-semibold">Thông tin xuất hóa đơn</h2>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="ten-khach-hang" class="block text-sm font-medium text-gray-700">Tên khách
-                                hàng</label>
-                            <input type="text" id="ten-khach-hang"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="ten-cong-ty" class="block text-sm font-medium text-gray-700">Tên công ty</label>
-                            <input type="text" id="ten-cong-ty"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="ma-so-thue" class="block text-sm font-medium text-gray-700">Mã số thuế</label>
-                            <input type="text" id="ma-so-thue"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label for="dia-chi" class="block text-sm font-medium text-gray-700">Địa chỉ</label>
-                            <input type="text" id="dia-chi"
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Right Column -->
@@ -218,8 +156,6 @@ var_dump($chuyenbay['GioKhoiHanh']);
                             <span class="mx-2">→</span>
                             <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioDen'])) ?></span>
                         </div>
-                        <div class="text-sm text-gray-600 mb-2">Hồ Chí Minh (SGN) — Quốc tế Tân Sơn Nhất</div>
-                        <div class="text-sm text-gray-600 mb-2">Hà Nội (HAN) — Quốc tế Nội Bài</div>
                         <div class="flex items-center mb-2">
                         </div>
                         <div class="text-sm text-gray-600"> Thời gian dự kiến: <?= date("H:i", strtotime($chuyenbay['ThoiGianDuKien'])) ?></div>
