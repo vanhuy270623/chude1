@@ -13,7 +13,6 @@ include 'header.php';
                         <h4>Tại Sao Nên Bay Cùng Chúng Tôi?</h4>
                         <ul class="social-links">
                             <li><a href=""><em>Cam kết giá tốt nhất</em></a></li>
-                            <li><a href="#"><em>Hơn 150 điểm đến trên toàn thế giới</em></a></li>
                             <li><a href="#"><em>Dịch vụ khách hàng cao cấp</em></a></li>
                             <li><a href="#"><em>Đặt chỗ an toàn & linh hoạt</em></a></li>
                         </ul>
