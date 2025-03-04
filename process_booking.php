@@ -39,13 +39,7 @@ var_dump($_POST);
                         <p><strong>Sân bay đi:</strong> Tân Sơn Nhất (SGN)</p>
                         <p><strong>Sân bay đến:</strong> Nội Bài (HAN)</p>
                         <p><strong>Thời gian bay:</strong> 2 giờ</p>
-                        <p><strong>Hạng vé:</strong> Economy</p>
-                    </div>
-                    <div class="luggage-info">
-                        <h3>Thông tin hành lý</h3>
-                        <p><strong>Hành lý ký gửi:</strong> 20kg</p>
-                        <p><strong>Hành lý xách tay:</strong> 7kg</p>
-                    </div>
+                    </div>               
                 </section>
             </div>
 

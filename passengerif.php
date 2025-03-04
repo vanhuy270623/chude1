@@ -19,9 +19,10 @@ var_dump($chuyenbay['GioKhoiHanh']);
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <div class="container">
             <!-- Left Column -->
-            <div class="left-column">
-                <!-- Passenger Information -->
-                <form action="process_booking.php" method="POST">
+            <form action="process_booking.php" method="POST">
+                <div class="left-column">
+                    <!-- Passenger Information -->
+
                     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
                         <div class="container">
                             <div class="left-column">
@@ -68,13 +69,10 @@ var_dump($chuyenbay['GioKhoiHanh']);
                                             </div>
                                         </div>
                                     <?php } ?>
-                                </div>  
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
-                    <!-- Contact Information -->
                     <div class="mb-6">
                         <h2 class="text-xl font-semibold mb-4 flex items-center">
                             <i class="fas fa-address-book mr-2"></i> Thông tin liên hệ
@@ -84,85 +82,94 @@ var_dump($chuyenbay['GioKhoiHanh']);
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium mb-1">Giới tính</label>
-                                    <select class="w-full border rounded p-2">
-                                        <option>Nam</option>
-                                        <option>Nữ</option>
+                                    <select name="contact[gender]" class="w-full border rounded p-2">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-1">Họ tên *</label>
-                                    <input type="text" class="w-full border rounded p-2"
-                                        placeholder="VÍ DỤ: NGUYEN TUAN ANH">
+                                    <input type="text" name="contact[fullname]" class="w-full border rounded p-2" placeholder="VÍ DỤ: NGUYEN TUAN ANH" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-1">Số điện thoại *</label>
-                                    <input type="text" class="w-full border rounded p-2">
+                                    <input type="text" name="contact[phone]" class="w-full border rounded p-2" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium mb-1">Email *</label>
-                                    <input type="email" class="w-full border rounded p-2">
+                                    <input type="email" name="contact[email]" class="w-full border rounded p-2" required>
                                 </div>
                                 <div class="col-span-1 md:col-span-2">
                                     <label class="block text-sm font-medium mb-1">Yêu cầu đặc biệt</label>
-                                    <textarea class="w-full border rounded p-2"></textarea>
+                                    <textarea name="contact[special_request]" class="w-full border rounded p-2"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="center-button">
+                   
+
+
+
+ 
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Price Details -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-2">Chi tiết giá</h3>
+                        <div class="border-t border-b py-2">
+                            <div class="flex justify-between text-sm mb-2">
+                                <?php $chuyenbay=$_POST['chuyenbay'] ?>
+                                <span>Số vé</span>
+                                <span><?= "x" . $_POST['passengers'] ?></span>
+                                <span><?= number_format($_POST['TongTien']) ?></span>
+                                <input type="hidden" name="Tienve[sove]" value="<?= $_POST['passengers'] ?>">
+                                <input type="hidden" name="Tienve[TongTien]" value="<?= $_POST['TongTien'] ?>">
+                                <input type="hidden" name="Tienve[GioKhoiHanh]" value="<?= $chuyenbay['GioKhoiHanh'] ?>">
+                                <input type="hidden" name="Tienve[GioDen]" value="<?=$chuyenbay['GioDen'] ?>">
+                                <input type="hidden" name="Tienve[ThoiGianDuKien]" value="<?= $chuyenbay['ThoiGianDuKien'] ?>">
+                                <input type="hidden" name="Tienve[DDi]" value="<?= $chuyenbay['DDi'] ?>">
+                                <input type="hidden" name="Tienve[DDen]" value="<?= $chuyenbay['DDen'] ?>">
+                                <input type="hidden" name="Tienve[IDHang]" value="<?= $chuyenbay['IDHang'] ?>">
+                                <input type="hidden" name="Tienve[NgayBay]" value="<?= $chuyenbay['NgayBay'] ?>">
+                            </div>
+                            
+                            <div class="flex justify-between text-sm mb-2">
+                                <span>Giảm giá</span>
+                                <span>0</span>
+                            </div>
+                            <div class="flex justify-between text-sm font-semibold">
+                                <span>Tổng</span>
+                                <span><?= number_format($_POST['TongTien']) ?></span>
+                            </div>
+                        </div>
+                        <div class="text-right text-lg font-semibold text-blue-600 mt-2"><?= number_format($_POST['TongTien']) ?></div>
+                        <div class="text-right text-sm text-gray-600">Đã bao gồm thuế, phí.</div>
+                    </div>
+
+                    <!-- Flight Details -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2"><?= $chuyenbay['DDi'] ?> → <?= $chuyenbay['DDen'] ?></h3>
+                        <p class="text-sm text-gray-600 mb-2">Ngày <?= date("d/m/Y", strtotime($chuyenbay['NgayBay'])) ?> — <?= $_POST['passengers'] ?> khách</p>
+                        <div class="border-t border-b py-2">
+                            <div class="flex items-center mb-2">
+                                <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioKhoiHanh'])) ?></span>
+                                <span class="mx-2">→</span>
+                                <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioDen'])) ?></span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                            </div>
+                            <div class="text-sm text-gray-600"> Thời gian dự kiến: <?= date("H:i", strtotime($chuyenbay['ThoiGianDuKien'])) ?></div>
+                        </div>
+                        <div class="center-button">
                         <button type="submit" class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-lg">Tiếp tục</button>
                     </div>
-                </form>
-
-
-
-            </div>
-
-            <!-- Right Column -->
-            <div class="right-column">
-                <!-- Price Details -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold mb-2">Chi tiết giá</h3>
-                    <div class="border-t border-b py-2">
-                        <div class="flex justify-between text-sm mb-2">
-                            <span>Số vé</span>
-                            <span><?= "x" . $_POST['passengers'] ?></span>
-                            <span><?= number_format($_POST['TongTien']) ?></span>
-                        </div>
-                        <div class="flex justify-between text-sm mb-2">
-                            <span>Hành lý thêm</span>
-                            <span>0</span>
-                        </div>
-                        <div class="flex justify-between text-sm mb-2">
-                            <span>Giảm giá</span>
-                            <span>0</span>
-                        </div>
-                        <div class="flex justify-between text-sm font-semibold">
-                            <span>Tổng</span>
-                            <span><?= number_format($_POST['TongTien']) ?></span>
-                        </div>
-                    </div>
-                    <div class="text-right text-lg font-semibold text-blue-600 mt-2"><?= number_format($_POST['TongTien']) ?></div>
-                    <div class="text-right text-sm text-gray-600">Đã bao gồm thuế, phí.</div>
-                </div>
-
-                <!-- Flight Details -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-2"><?= $chuyenbay['DDi'] ?> → <?= $chuyenbay['DDen'] ?></h3>
-                    <p class="text-sm text-gray-600 mb-2">Ngày <?= date("d/m/Y", strtotime($chuyenbay['NgayBay'])) ?> — <?= $_POST['passengers'] ?> khách</p>
-                    <div class="border-t border-b py-2">
-                        <div class="flex items-center mb-2">
-                            <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioKhoiHanh'])) ?></span>
-                            <span class="mx-2">→</span>
-                            <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioDen'])) ?></span>
-                        </div>
-                        <div class="flex items-center mb-2">
-                        </div>
-                        <div class="text-sm text-gray-600"> Thời gian dự kiến: <?= date("H:i", strtotime($chuyenbay['ThoiGianDuKien'])) ?></div>
                     </div>
                 </div>
-            </div>
         </div>
+        </form>
 
         <!-- Continue Button -->
 

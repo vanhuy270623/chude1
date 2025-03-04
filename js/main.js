@@ -236,3 +236,64 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error("Lỗi:", error));
     });
 });
+async function fetchFlights() {
+    try {
+        const response = await fetch("http://localhost/api/searchFlights.php?origin=SGN&destination=HAN&departure_date=2025-03-10");
+        const data = await response.json();
+        
+        console.log(data); // Hiển thị danh sách chuyến bay trên console
+
+        // Hiển thị dữ liệu trên giao diện
+        let flightsContainer = document.getElementById("flights");
+        flightsContainer.innerHTML = "";
+
+        if (data.data) {
+            data.data.forEach(flight => {
+                let flightInfo = `
+                    <div class="flight">
+                        <p><strong>Hãng bay:</strong> ${flight.itineraries[0].segments[0].carrierCode}</p>
+                        <p><strong>Chuyến bay:</strong> ${flight.itineraries[0].segments[0].flightNumber}</p>
+                        <p><strong>Giá vé:</strong> ${flight.price.total} ${flight.price.currency}</p>
+                        <p><strong>Thời gian đi:</strong> ${flight.itineraries[0].segments[0].departure.at}</p>
+                        <p><strong>Thời gian đến:</strong> ${flight.itineraries[0].segments[0].arrival.at}</p>
+                    </div>
+                    <hr>
+                `;
+                flightsContainer.innerHTML += flightInfo;
+            });
+        } else {
+            flightsContainer.innerHTML = "<p>Không tìm thấy chuyến bay nào!</p>";
+        }
+    } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+    }
+}
+
+// Gọi hàm khi trang tải xong
+document.addEventListener("DOMContentLoaded", fetchFlights);
+async function timKiemChuyenBay() {
+    const ddi = document.getElementById('ddi').value;
+    const dden = document.getElementById('dden').value;
+    const ngayBay = document.getElementById('ngayBay').value;
+    
+    const response = await fetch(`api.php?action=timkiem&DDi=${ddi}&DDen=${dden}&NgayBay=${ngayBay}`);
+    const data = await response.json();
+    
+    let resultDiv = document.getElementById('ketQua');
+    resultDiv.innerHTML = '<h3>Kết quả tìm kiếm:</h3>' + JSON.stringify(data, null, 2);
+}
+
+async function luuHoaDon() {
+    const idChuyenBay = document.getElementById('idChuyenBay').value;
+    const khachHang = document.getElementById('khachHang').value;
+    const soTien = document.getElementById('soTien').value;
+    const ngayLap = document.getElementById('ngayLap').value;
+    
+    const response = await fetch('api.php?action=luuhoadon', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({IDChuyenBay: idChuyenBay, KhachHang: khachHang, SoTien: soTien, NgayLap: ngayLap})
+    });
+    const data = await response.json();
+    alert(data.message || data.error);
+}

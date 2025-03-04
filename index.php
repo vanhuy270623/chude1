@@ -29,12 +29,13 @@ include 'header.php';
                     <div id="tab1">
                         <div class="submit-form">
                             <h4>Kiểm tra chỗ trống cho <em>hướng</em>:</h4>
-                            <form onsubmit="validateForm(event)" action="flightsearch.php" method="post">
+                            <form onsubmit="validateForm(event)" action="flightsearch.php?" method="get">
+                                <input type="hidden" name="action" value="timkiem">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="from">Từ:</label>
-                                            <select name="from" id="from" required>
+                                            <select name="DDi" id="DDi" required>
                                                 <?php
                                                 foreach ($LocaltionDi as $value) {
                                                     echo "<option value='{$value['DDi']}'>{$value['DDi']}</option>";
@@ -46,7 +47,7 @@ include 'header.php';
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="to">Đến:</label>
-                                            <select name="to" id="to" required>
+                                            <select name="DDen" id="DDen" required>
                                                 <?php
                                                 foreach ($LocaltionDen as $value) {
                                                     echo "<option value='{$value['DDen']}'>{$value['DDen']}</option>";
@@ -58,22 +59,21 @@ include 'header.php';
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="departure">Ngày khởi hành:</label>
-                                            <input name="departure" id="departure" type="date" class="form-control" required>
+                                            <input name="NgayBay" id="NgayBay" type="date" class="form-control" required>
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
-                                            <label for="return">Ngày trở về:</label>
-                                            <input name="return" id="return" type="date" class="form-control">
+                                            <label for="NgayBayReturn">Ngày trở về:</label>
+                                            <input name="NgayBayReturn" id="NgayBayReturn" type="date" class="form-control">
                                         </fieldset>
                                     </div>
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="passengers">Số lượng hành khách:</label>
-                                            <input name="passengers" type="number" class="form-control" min="1" max="10"
-                                                required>
+                                            <input name="passengers" type="number" class="form-control" min="1" max="10" required>
                                         </fieldset>
-                                    </div>    
+                                    </div>
                                     <div class="col-md-6">
                                         <fieldset>
                                             <button type="submit" class="btn">Tìm chuyến bay</button>
@@ -81,6 +81,7 @@ include 'header.php';
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </section>
