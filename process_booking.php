@@ -1,4 +1,7 @@
 <?php
+include 'header.php';
+?>
+<?php
 // Kết nối đến database
 require_once 'config/database.php';
 
