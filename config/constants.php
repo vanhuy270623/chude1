@@ -1,5 +1,4 @@
 <?php
-session_start();
 define("ROOT_URL", "http://localhost/flightflight/");
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');

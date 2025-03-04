@@ -1,7 +1,10 @@
+
 <?php
-var_dump($_POST);
-$chuyenbay = $_POST['chuyenbay'];
-var_dump($chuyenbay['GioKhoiHanh']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $chuyenbay = $_POST['chuyenbay'];
+    $sove = $_POST['passengers'];
+    $tongTien = $_POST['TongTien'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -106,11 +109,11 @@ var_dump($chuyenbay['GioKhoiHanh']);
                             </div>
                         </div>
                     </div>
-                   
 
 
 
- 
+
+
 
                 </div>
 
@@ -121,21 +124,20 @@ var_dump($chuyenbay['GioKhoiHanh']);
                         <h3 class="text-lg font-semibold mb-2">Chi tiết giá</h3>
                         <div class="border-t border-b py-2">
                             <div class="flex justify-between text-sm mb-2">
-                                <?php $chuyenbay=$_POST['chuyenbay'] ?>
                                 <span>Số vé</span>
-                                <span><?= "x" . $_POST['passengers'] ?></span>
-                                <span><?= number_format($_POST['TongTien']) ?></span>
-                                <input type="hidden" name="Tienve[sove]" value="<?= $_POST['passengers'] ?>">
-                                <input type="hidden" name="Tienve[TongTien]" value="<?= $_POST['TongTien'] ?>">
-                                <input type="hidden" name="Tienve[GioKhoiHanh]" value="<?= $chuyenbay['GioKhoiHanh'] ?>">
-                                <input type="hidden" name="Tienve[GioDen]" value="<?=$chuyenbay['GioDen'] ?>">
-                                <input type="hidden" name="Tienve[ThoiGianDuKien]" value="<?= $chuyenbay['ThoiGianDuKien'] ?>">
-                                <input type="hidden" name="Tienve[DDi]" value="<?= $chuyenbay['DDi'] ?>">
-                                <input type="hidden" name="Tienve[DDen]" value="<?= $chuyenbay['DDen'] ?>">
-                                <input type="hidden" name="Tienve[IDHang]" value="<?= $chuyenbay['IDHang'] ?>">
-                                <input type="hidden" name="Tienve[NgayBay]" value="<?= $chuyenbay['NgayBay'] ?>">
+                                <span><?= "x" . htmlspecialchars($sove) ?></span>
+                                <span><?= number_format($tongTien) ?> VND</span>
+                                <input type="hidden" name="Tienve[sove]" value="<?= htmlspecialchars($sove) ?>">
+                                <input type="hidden" name="Tienve[TongTien]" value="<?= htmlspecialchars($tongTien) ?>">
+                                <input type="hidden" name="Tienve[GioKhoiHanh]" value="<?= htmlspecialchars($chuyenbay['GioKhoiHanh']) ?>">
+                                <input type="hidden" name="Tienve[GioDen]" value="<?= htmlspecialchars($chuyenbay['GioDen']) ?>">
+                                <input type="hidden" name="Tienve[ThoiGianDuKien]" value="<?= htmlspecialchars($chuyenbay['ThoiGianDuKien']) ?>">
+                                <input type="hidden" name="Tienve[DDi]" value="<?= htmlspecialchars($chuyenbay['DDi']) ?>">
+                                <input type="hidden" name="Tienve[DDen]" value="<?= htmlspecialchars($chuyenbay['DDen']) ?>">
+                                <input type="hidden" name="Tienve[IDHang]" value="<?= htmlspecialchars($chuyenbay['IDHang']) ?>">
+                                <input type="hidden" name="Tienve[NgayBay]" value="<?= htmlspecialchars($chuyenbay['NgayBay']) ?>">
                             </div>
-                            
+
                             <div class="flex justify-between text-sm mb-2">
                                 <span>Giảm giá</span>
                                 <span>0</span>
@@ -151,21 +153,19 @@ var_dump($chuyenbay['GioKhoiHanh']);
 
                     <!-- Flight Details -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-2"><?= $chuyenbay['DDi'] ?> → <?= $chuyenbay['DDen'] ?></h3>
-                        <p class="text-sm text-gray-600 mb-2">Ngày <?= date("d/m/Y", strtotime($chuyenbay['NgayBay'])) ?> — <?= $_POST['passengers'] ?> khách</p>
+                        <h3 class="text-lg font-semibold mb-2"><?= htmlspecialchars($chuyenbay['DDi']) ?> → <?= htmlspecialchars($chuyenbay['DDen']) ?></h3>
+                        <p class="text-sm text-gray-600 mb-2">Ngày <?= date("d/m/Y", strtotime($chuyenbay['NgayBay'])) ?> — <?= htmlspecialchars($sove) ?> khách</p>
                         <div class="border-t border-b py-2">
                             <div class="flex items-center mb-2">
                                 <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioKhoiHanh'])) ?></span>
                                 <span class="mx-2">→</span>
                                 <span class="text-sm font-semibold"><?= date("H:i", strtotime($chuyenbay['GioDen'])) ?></span>
                             </div>
-                            <div class="flex items-center mb-2">
-                            </div>
-                            <div class="text-sm text-gray-600"> Thời gian dự kiến: <?= date("H:i", strtotime($chuyenbay['ThoiGianDuKien'])) ?></div>
+                            <div class="text-sm text-gray-600">Thời gian dự kiến: <?= date("H:i", strtotime($chuyenbay['ThoiGianDuKien'])) ?></div>
                         </div>
                         <div class="center-button">
-                        <button type="submit" class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-lg">Tiếp tục</button>
-                    </div>
+                            <button type="submit" class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-lg">Tiếp tục</button>
+                        </div>
                     </div>
                 </div>
         </div>

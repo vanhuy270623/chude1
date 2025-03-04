@@ -86,8 +86,23 @@ if ($method === 'GET' && $action === 'timkiem') {
     <link rel="stylesheet" href="css/flightsearch.css">
 </head>
 <script>
-    function redirectToPassenger() {
-        window.location.href = "passengerif.php";
+     function redirectToPassenger(button) {
+        let flightDiv = button.closest('.flight-info');
+        let form = document.createElement('form');
+        form.method = "POST";
+        form.action = "passengerif.php";
+
+        let inputs = flightDiv.querySelectorAll("input[type=hidden]");
+        inputs.forEach(input => {
+            let hiddenField = document.createElement("input");
+            hiddenField.type = "hidden";
+            hiddenField.name = input.name;
+            hiddenField.value = input.value;
+            form.appendChild(hiddenField);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
     }
 </script>
 
@@ -138,7 +153,7 @@ if ($method === 'GET' && $action === 'timkiem') {
                                     <?= number_format($value['GiaTien'] * $_GET['passengers']) ?> VND
                                 </div>
                                 <div class="text-sm text-gray-500">Tổng thành tiền</div>
-                                <button onclick="redirectToPassenger()">CHỌN</button>
+                                <button onclick="redirectToPassenger(this)">CHỌN</button>
                             </div>
                         </div>
                     <?php endforeach; ?>

@@ -1,8 +1,50 @@
 <?php
-var_dump($_POST);
-require 'config/database.php';
+require_once 'config/database.php'; // Kết nối database
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] == 'login') {
+            $username = $_POST["username"];
+            $password = md5($_POST["password"]);
+            $result = $pdo->prepare("select * from taikhoan where TenDN=:tendn and MatKhau=:pass");
+            $result->bindValue("tendn", $username);
+            $result->bindValue("pass", $password);
+            $result->execute();
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+            var_dump($row);
+            if ($row) {
+                $_SESSION['login'] = $row['TenDN'];
+                header("Location: index.php");
+            } else {
+                $loi = '<p style="color:red">Ten dang nhap hoac mat khau khong dung';
+            }
+        } elseif ($_POST['action'] == 'register') {
+            // 🔵 Xử lý đăng ký
+            $username = trim($_POST["username"]);
+            $email = trim($_POST["email"]);
+            $password = trim($_POST["password"]);
+
+           
+            // Mã hóa mật khẩu an toàn
+            $hashed_password = md5($password);
+
+            // Thêm tài khoản vào database
+            $stmt = $pdo->prepare("INSERT INTO taikhoan (TenDN, MatKhau, Email) VALUES (?, ?, ?)");
+            if ($stmt->execute([$username, $hashed_password, $email])) {
+                $_SESSION['login'] = $username;
+                $_SESSION['message'] = "Đăng ký thành công!";
+                header("Location: index.php");
+                exit();
+            } else {
+                $_SESSION['error'] = "Đăng ký thất bại, vui lòng thử lại!";
+                header("Location: login.php");
+                exit();
+            }
+        }
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,53 +57,10 @@ require 'config/database.php';
 </head>
 
 <body>
-    <?php
-    if (isset($_POST['login'])) {
-        $username = trim($_POST["username"]);
-        $email = trim($_POST["email"]);
-        $password = trim($_POST["password"]);
-        $result = $pdo->prepare("select * from taikhoan where TenDN=:tendn and MatKhau=:pass");
-        $result->bindValue("tendn", $username);
-        $result->bindValue("pass", $password);
-        $result->execute();
-        $row = $result->fetch(PDO::FETCH_ASSOC);
-        if ($row) {
-            $_SESSION['login'] = $row['TenDN'];
-            header("Location: index.php");
-        } else {
-            $loi = '<p style="color:red">Ten dang nhap hoac mat khau khong dung';
-        }
-    }
-    if (isset($_POST['register'])) {
-        $username = trim($_POST["username"]);
-        $email = trim($_POST["email"]);
-        $password = trim($_POST["password"]);
-        try {
-            // 🔍 Kiểm tra xem username đã tồn tại chưa
-            $check = $pdo->prepare("SELECT * FROM taikhoan WHERE TenDN = ?");
-            $check->execute([$username]);
-    
-            if ($check->rowCount() > 0) {
-                die("Tên đăng nhập đã tồn tại! Vui lòng chọn tên khác.");
-            }
-    
-            // ✅ Nếu chưa tồn tại, mã hóa mật khẩu và lưu vào database
-          
-            $stmt = $pdo->prepare("INSERT INTO taikhoan (TenDN, MatKhau) VALUES (?, ?)");
-            $stmt->execute([$username, $password]);
 
-            // Đăng ký thành công, lưu session và chuyển hướng
-            $_SESSION['login'] = $username;
-            header("Location: index.php");
-            exit();
-        } catch (PDOException $e) {
-            echo "Lỗi: " . $e->getMessage();
-        }
-    }
-    ?>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form method="post" action="signin.php">
+            <form method="post">
                 <h1>Create Account</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -78,7 +77,7 @@ require 'config/database.php';
             </form>
         </div>
         <div class="form-container sign-in">
-            <form method="post" action="signin.php">
+            <form method="post">
                 <h1>Sign In</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -111,4 +110,5 @@ require 'config/database.php';
     </div>
     <script src="js/main.js"></script>
 </body>
+
 </html>

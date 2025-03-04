@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-
 ?>
 <section class="banner" id="top">
     <div class="container">
