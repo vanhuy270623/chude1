@@ -13,6 +13,50 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   } 
 });
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("form").addEventListener("submit", function (event) {
+        let isValid = true;
+        let errorMessage = "";
+
+        // Kiểm tra họ tên
+        document.querySelectorAll("input[name^='passengers']").forEach(input => {
+            if (input.name.includes("fullname") && input.value.trim() === "") {
+                isValid = false;
+                errorMessage += "Họ tên không được để trống.\n";
+            }
+        });
+
+        // Kiểm tra số CCCD/Passport
+        document.querySelectorAll("input[name^='passengers']").forEach(input => {
+            if (input.name.includes("id_number") && input.value.trim() === "") {
+                isValid = false;
+                errorMessage += "Số CCCD/Passport không được để trống.\n";
+            }
+        });
+
+        // Kiểm tra số điện thoại
+        let phoneInput = document.querySelector("input[name='contact[phone]']");
+        let phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(phoneInput.value.trim())) {
+            isValid = false;
+            errorMessage += "Số điện thoại không hợp lệ.\n";
+        }
+
+        // Kiểm tra email
+        let emailInput = document.querySelector("input[name='contact[email]']");
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value.trim())) {
+            isValid = false;
+            errorMessage += "Email không hợp lệ.\n";
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            alert(errorMessage);
+        }
+    });
+});
+
 function toggleInvoiceInfo() {
   const invoiceInfo = document.getElementById('invoice-info');
   if (invoiceInfo.classList.contains('hidden')) {
