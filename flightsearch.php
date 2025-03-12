@@ -3,79 +3,17 @@ include 'header.php';
 ?>
 <?php
 
-// Kết nối đến database
 require_once 'config/database.php';
-
-// Kiểm tra phương thức request
-$method = $_SERVER['REQUEST_METHOD'];
-$action = $_GET['action'] ?? '';
-
-// header('Content-Type: application/json');
-
-if ($method === 'GET' && $action === 'timkiem') {
-    try {
-        // Lấy tham số tìm kiếm
-        $diemDi = $_GET['DDi'] ?? '';
-        $diemDen = $_GET['DDen'] ?? '';
-        $ngayKhoiHanh = $_GET['NgayBay'] ?? '';
-
-        // Kiểm tra nếu cả ba tham số đều có giá trị mới thực hiện truy vấn
-        if (!empty($diemDi) && !empty($diemDen) && !empty($ngayKhoiHanh)) {
-            $query = "SELECT chuyenbay.*, hangbay.TenHang, hangbay.MaMayBay 
-                      FROM chuyenbay 
-                      JOIN hangbay ON chuyenbay.IDHang = hangbay.IDHang 
-                      WHERE chuyenbay.DDi = ? AND chuyenbay.DDen = ? AND chuyenbay.NgayBay = ?";
-            $stmt = $pdo->prepare($query);
-            $stmt->execute([$diemDi, $diemDen, $ngayKhoiHanh]);
-            $flights = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $flights = [];
-        }
-    } catch (PDOException $e) {
-        $flights = [];
-    }
-    // var_dump($flights);
+// var_dump($_SESSION['flightOffers']);
+// Kiểm tra xem dữ liệu có được trả về không
+if (isset($_SESSION['flightOffers']) == FALSE) {
+    die('Error fetching data from API');
 }
 
-//// chạy api test cho mọi người coi
+$flightOffers=$_SESSION['flightOffers'];
 
-// header('Content-Type: application/json');
 
-// if ($method === 'GET' && $action === 'timkiem') {
-//     try {
-//         // Lấy tham số tìm kiếm
-//         $diemDi = $_GET['DDi'] ?? '';
-//         $diemDen = $_GET['DDen'] ?? '';
-//         $ngayKhoiHanh = $_GET['NgayBay'] ?? '';
 
-//         // Kiểm tra nếu cả ba tham số đều có giá trị mới thực hiện truy vấn
-//         // if (!empty($diemDi) && !empty($diemDen) && !empty($ngayKhoiHanh)) {
-//             $query = "SELECT chuyenbay.*, hangbay.TenHang, hangbay.MaMayBay 
-//                       FROM chuyenbay 
-//                       JOIN hangbay ON chuyenbay.IDHang = hangbay.IDHang 
-//                     --   WHERE chuyenbay.DDi = ? AND chuyenbay.DDen = ? AND chuyenbay.NgayBay = ?
-//                     ";
-//             $stmt = $pdo->prepare($query);
-//             $stmt->execute();
-//             $flights = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//         // } else {
-//         //     $flights = [];
-//         // }
-
-//         // Trả về dữ liệu dưới dạng JSON
-//         echo json_encode([
-//             'status' => 'success',
-//             'data' => $flights
-//         ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//     } 
-//     catch (PDOException $e) {
-//         echo json_encode([
-//             'status' => 'error',
-//             'message' => 'Lỗi kết nối database: ' . $e->getMessage()
-//         ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//     }
-// }
-// exit;
 ?>
 <html lang="en">
 
@@ -128,32 +66,35 @@ if ($method === 'GET' && $action === 'timkiem') {
                 <button class="day-button">Thứ 4<br />05/03</button>
             </div>
             <div class="p-4">
-                <?php if (!empty($flights)): ?>
-                    <?php foreach ($flights as $value): ?>
+                <?php if (!empty($flightOffers)): ?>
+                    <?php foreach ($flightOffers as $offer): 
+                        // var_dump($offer)
+                        ?>
+                        
                         <div class="flight-info">
                             <img alt="Vietjet Air logo" src="https://storage.googleapis.com/a1aa/image/Oq1tCQqOOQr42yWO3DYuRyfepECFjP0k4EmmrpDGrPI.jpg" />
                             <div class="details">
-                                <div class="font-bold"><?= $value['TenHang'] ?> - <?= $value['MaMayBay'] ?></div>
+                                <div class="font-bold"><?= $offer['itineraries'][0]['segments'][0]['carrierCode'] . $offer['itineraries'][0]['segments'][0]['number']?> - <?= $offer['itineraries'][0]['segments'][0]['aircraft']['code'] ?></div>
                                 <div class="text-sm text-gray-500">
-                                    <?= $value['GioKhoiHanh'] ?> <?= $value['DDi'] ?>
+                                    <?= $offer['itineraries'][0]['segments'][0]['departure']['at'] ?> <?= $offer['itineraries'][0]['segments'][0]['departure']['iataCode'] ?>
                                     <i class="fas fa-arrow-right mx-2"></i>
-                                    <?= $value['GioDen'] ?> <?= $value['DDen'] ?>
+                                    <?=  $offer['itineraries'][0]['segments'][0]['arrival']['at'] ?> <?=  $offer['itineraries'][0]['segments'][0]['arrival']['iataCode']?>
                                 </div>
-                                <div class="text-sm text-gray-500"><?= $value['ThoiGianDuKien'] ?> Bay thẳng</div>
-                                <input type="hidden" name="chuyenbay[GioKhoiHanh]" value="<?= $value['GioKhoiHanh'] ?>">
-                                <input type="hidden" name="chuyenbay[GioDen]" value="<?= $value['GioDen'] ?>">
-                                <input type="hidden" name="chuyenbay[ThoiGianDuKien]" value="<?= $value['ThoiGianDuKien'] ?>">
-                                <input type="hidden" name="chuyenbay[DDi]" value="<?= $value['DDi'] ?>">
-                                <input type="hidden" name="chuyenbay[DDen]" value="<?= $value['DDen'] ?>">
-                                <input type="hidden" name="chuyenbay[IDHang]" value="<?= $value['IDHang'] ?>">
-                                <input type="hidden" name="chuyenbay[NgayBay]" value="<?= $value['NgayBay'] ?>">
-                                <input type="hidden" name="chuyenbay[GiaTien]" value="<?= $value['GiaTien'] ?>">
-                                <input type="hidden" name="TongTien" value="<?= $value['GiaTien'] * $_GET['passengers'] ?>">
-                                <input type="hidden" name="passengers" value="<?= $_GET['passengers'] ?>">
+                                <div class="text-sm text-gray-500"><?= $offer['itineraries'][0]['segments'][0]['duration'] ?> Bay thẳng</div>
+                                <input type="hidden" name="chuyenbay[GioKhoiHanh]" value="<?= $offer['itineraries'][0]['segments'][0]['departure']['at'] ?>">
+                                <input type="hidden" name="chuyenbay[GioDen]" value="<?= $offer['itineraries'][0]['segments'][0]['arrival']['at'] ?>">
+                                <input type="hidden" name="chuyenbay[ThoiGianDuKien]" value="<?= $offer['itineraries'][0]['segments'][0]['duration'] ?>">
+                                <input type="hidden" name="chuyenbay[DDi]" value="<?= $offer['itineraries'][0]['segments'][0]['departure']['iataCode'] ?>">
+                                <input type="hidden" name="chuyenbay[DDen]" value="<?= $offer['itineraries'][0]['segments'][0]['arrival']['iataCode'] ?>">
+                                <input type="hidden" name="chuyenbay[IDHang]" value="<?= $offer['itineraries'][0]['segments'][0]['carrierCode'] . $offer['itineraries'][0]['segments'][0]['number']?>">
+                                <input type="hidden" name="chuyenbay[NgayBay]" value="<?= $offer['itineraries'][0]['segments'][0]['departure']['at']?>">
+                                <input type="hidden" name="chuyenbay[GiaTien]" value="<?= $offer['price']['total'] ?>">
+                                <input type="hidden" name="TongTien" value="<?= $offer['price']['total'] * $_SESSION['flights']['SoHanhKhach'] ?>">
+                                <input type="hidden" name="passengers" value="<?= $_SESSION['flights']['SoHanhKhach'] ?>">
                             </div>
                             <div class="price">
                                 <div class="text-lg font-bold text-blue-600">
-                                    <?= number_format($value['GiaTien'] * $_GET['passengers']) ?> VND
+                                    <?= $offer['price']['total'] * $_SESSION['flights']['SoHanhKhach'] ?> EUR
                                 </div>
                                 <div class="text-sm text-gray-500">Tổng thành tiền</div>
                                 <button onclick="redirectToPassenger(this)">CHỌN</button>

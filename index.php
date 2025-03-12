@@ -1,5 +1,8 @@
 <?php
 include 'header.php';
+$jsonFile = 'api/airport_data.json';
+$jsonData = file_get_contents($jsonFile);
+$airportData = json_decode($jsonData, true);
 ?>
 <section class="banner" id="top">
     <div class="container">
@@ -13,6 +16,7 @@ include 'header.php';
                         <h4>Tại Sao Nên Bay Cùng Chúng Tôi?</h4>
                         <ul class="social-links">
                             <li><a href=""><em>Cam kết giá tốt nhất</em></a></li>
+                            <li><a href="#"><em>Hơn 150 điểm đến trên toàn thế giới</em></a></li>
                             <li><a href="#"><em>Dịch vụ khách hàng cao cấp</em></a></li>
                             <li><a href="#"><em>Đặt chỗ an toàn & linh hoạt</em></a></li>
                         </ul>
@@ -27,16 +31,16 @@ include 'header.php';
                     <div id="tab1">
                         <div class="submit-form">
                             <h4>Kiểm tra chỗ trống cho <em>hướng</em>:</h4>
-                            <form onsubmit="validateForm(event)" action="flightsearch.php?" method="get">
-                                <input type="hidden" name="action" value="timkiem">
+                            <form onsubmit="validateForm(event)" action="api/api.php" method="get">
+                                <!-- <input type="hidden" name="action" value="timkiem"> -->
                                 <div class="row">
                                     <div class="col-md-6">
                                         <fieldset>
                                             <label for="from">Từ:</label>
                                             <select name="DDi" id="DDi" required>
                                                 <?php
-                                                foreach ($LocaltionDi as $value) {
-                                                    echo "<option value='{$value['DDi']}'>{$value['DDi']}</option>";
+                                                foreach ($airportData as $key => $value) {
+                                                    echo "<option value='{$key}'>{$value}</option>";
                                                 }
                                                 ?>
                                             </select>
@@ -47,8 +51,8 @@ include 'header.php';
                                             <label for="to">Đến:</label>
                                             <select name="DDen" id="DDen" required>
                                                 <?php
-                                                foreach ($LocaltionDen as $value) {
-                                                    echo "<option value='{$value['DDen']}'>{$value['DDen']}</option>";
+                                                foreach ($airportData as $key => $value) {
+                                                    echo "<option value='{$key}'>{$value}</option>";
                                                 }
                                                 ?>
                                             </select>

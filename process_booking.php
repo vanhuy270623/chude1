@@ -8,7 +8,6 @@ require_once 'config/database.php';
 // Kiểm tra phương thức request
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
-
 if ($method === 'POST') {
     try {
         // Lấy dữ liệu từ form
@@ -19,7 +18,7 @@ if ($method === 'POST') {
         // Tạo ID chuyến bay
 
 
-        $idChuyenBay = $chuyenbay['TongTien'] * $chuyenbay['IDHang'] - $chuyenbay['sove'];
+        $idChuyenBay = $chuyenbay['IDHang'];
 
         $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM dat_ve WHERE chuyenbay_id = ?");
         $stmt_check->execute([$idChuyenBay]);
@@ -61,6 +60,34 @@ if ($method === 'POST') {
         echo "<script>alert('Lỗi: " . $e->getMessage() . "');</script>";
     }
 }
+function convertIso8601Duration($duration) {
+    // Biểu thức chính quy để tách các phần của chuỗi ISO 8601
+    $pattern = '/P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/';
+    preg_match($pattern, $duration, $matches);
+    
+    // Gán giá trị cho từng phần nếu tồn tại
+    $days    = isset($matches[1]) ? (int)$matches[1] : 0;
+    $hours   = isset($matches[2]) ? (int)$matches[2] : 0;
+    $minutes = isset($matches[3]) ? (int)$matches[3] : 0;
+    $seconds = isset($matches[4]) ? (int)$matches[4] : 0;
+
+    $parts = [];
+    if ($days > 0) {
+        $parts[] = $days . " ngày";
+    }
+    if ($hours > 0) {
+        $parts[] = $hours . " giờ";
+    }
+    if ($minutes > 0) {
+        $parts[] = $minutes . " phút";
+    }
+    if ($seconds > 0) {
+        $parts[] = $seconds . " giây";
+    }
+
+    // Nối các phần lại với nhau
+    return implode(" ", $parts);
+}
 
 ?>
 <!DOCTYPE html>
@@ -101,7 +128,7 @@ if ($method === 'POST') {
                         <p><strong>Giờ đến:</strong> <?= $chuyenbay['GioDen'] ?></p>
                         <p><strong>Sân bay đi:</strong> <?= $chuyenbay['DDi'] ?></p>
                         <p><strong>Sân bay đến:</strong> <?= $chuyenbay['DDen'] ?></p>
-                        <p><strong>Thời gian bay:</strong> <?= $chuyenbay['ThoiGianDuKien'] ?></p>
+                        <p><strong>Thời gian bay:</strong> <?= convertIso8601Duration($chuyenbay['ThoiGianDuKien'] )?></p>
                     </div>
                 </section>
             </div>
@@ -109,7 +136,7 @@ if ($method === 'POST') {
             <div class="right-column">
                 <section class="payment-info">
                     <h2>Thông tin thanh toán</h2>
-                    <p><strong>Tổng chi phí:</strong> <?= number_format($chuyenbay['TongTien']) ?> VND</p>
+                    <p><strong>Tổng chi phí:</strong> <?= $chuyenbay['TongTien'] ?> EUR</p>
                     <p><strong>Phương thức thanh toán:</strong> Thẻ tín dụng</p>
 
                 </section>

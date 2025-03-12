@@ -2,9 +2,11 @@
 include 'header.php';
 ?>
 <?php
-var_dump($_POST);
-$chuyenbay = $_POST['chuyenbay'];
-var_dump($chuyenbay['GioKhoiHanh']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $chuyenbay = $_POST['chuyenbay'];
+    $sove = $_POST['passengers'];
+    $tongTien = $_POST['TongTien'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -126,17 +128,17 @@ var_dump($chuyenbay['GioKhoiHanh']);
                             <div class="flex justify-between text-sm mb-2">
                                 <?php $chuyenbay=$_POST['chuyenbay'] ?>
                                 <span>Số vé</span>
-                                <span><?= "x" . $_POST['passengers'] ?></span>
-                                <span><?= number_format($_POST['TongTien']) ?></span>
-                                <input type="hidden" name="Tienve[sove]" value="<?= $_POST['passengers'] ?>">
-                                <input type="hidden" name="Tienve[TongTien]" value="<?= $_POST['TongTien'] ?>">
-                                <input type="hidden" name="Tienve[GioKhoiHanh]" value="<?= $chuyenbay['GioKhoiHanh'] ?>">
-                                <input type="hidden" name="Tienve[GioDen]" value="<?=$chuyenbay['GioDen'] ?>">
-                                <input type="hidden" name="Tienve[ThoiGianDuKien]" value="<?= $chuyenbay['ThoiGianDuKien'] ?>">
-                                <input type="hidden" name="Tienve[DDi]" value="<?= $chuyenbay['DDi'] ?>">
-                                <input type="hidden" name="Tienve[DDen]" value="<?= $chuyenbay['DDen'] ?>">
-                                <input type="hidden" name="Tienve[IDHang]" value="<?= $chuyenbay['IDHang'] ?>">
-                                <input type="hidden" name="Tienve[NgayBay]" value="<?= $chuyenbay['NgayBay'] ?>">
+                                <span><?= "x" . htmlspecialchars($sove) ?></span>
+                                <span><?= $tongTien ?> EUR</span>
+                                <input type="hidden" name="Tienve[sove]" value="<?= htmlspecialchars($sove) ?>">
+                                <input type="hidden" name="Tienve[TongTien]" value="<?= htmlspecialchars($tongTien) ?>">
+                                <input type="hidden" name="Tienve[GioKhoiHanh]" value="<?= htmlspecialchars($chuyenbay['GioKhoiHanh']) ?>">
+                                <input type="hidden" name="Tienve[GioDen]" value="<?= htmlspecialchars($chuyenbay['GioDen']) ?>">
+                                <input type="hidden" name="Tienve[ThoiGianDuKien]" value="<?= htmlspecialchars($chuyenbay['ThoiGianDuKien']) ?>">
+                                <input type="hidden" name="Tienve[DDi]" value="<?= htmlspecialchars($chuyenbay['DDi']) ?>">
+                                <input type="hidden" name="Tienve[DDen]" value="<?= htmlspecialchars($chuyenbay['DDen']) ?>">
+                                <input type="hidden" name="Tienve[IDHang]" value="<?= htmlspecialchars($chuyenbay['IDHang']) ?>">
+                                <input type="hidden" name="Tienve[NgayBay]" value="<?= htmlspecialchars($chuyenbay['NgayBay']) ?>">
                             </div>
                             
                             <div class="flex justify-between text-sm mb-2">
@@ -145,10 +147,10 @@ var_dump($chuyenbay['GioKhoiHanh']);
                             </div>
                             <div class="flex justify-between text-sm font-semibold">
                                 <span>Tổng</span>
-                                <span><?= number_format($_POST['TongTien']) ?></span>
+                                <span><?= $_POST['TongTien'] ?> EUR</span>
                             </div>
                         </div>
-                        <div class="text-right text-lg font-semibold text-blue-600 mt-2"><?= number_format($_POST['TongTien']) ?></div>
+                        <div class="text-right text-lg font-semibold text-blue-600 mt-2"><?= $_POST['TongTien'] ?> EUR</div>
                         <div class="text-right text-sm text-gray-600">Đã bao gồm thuế, phí.</div>
                     </div>
 
